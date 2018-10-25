@@ -70,8 +70,8 @@ vector<Point> detectFeaturePoint(Mat frame, int threshold) {
 	bool detected;
 	cvtColor(frame, grayFrame, COLOR_BGR2GRAY);
 
-	for (int r = 0; r < frame.rows; r++) {
-		for (int c = 0; c < frame.cols; c++) {
+	for (int r = 3; r < frame.rows-3; r++) {
+		for (int c = 3; c < frame.cols-3; c++) {
 			
 			detected = detect(grayFrame,r,c,threshold);
 			if (detected) {
@@ -91,11 +91,8 @@ void drawPoints(Mat frame, vector<Point> pointList) {
 
 bool overThreshold(Mat frame, int pixelTarget, Point comparedPoint, int threshold)
 {
-	if (inBoundary(frame, comparedPoint)) {
-		int pixel1 = frame.at<unsigned char>(comparedPoint);
-		return abs(pixelTarget - pixel1) >= threshold;
-	}
-	return false;
+	int pixel1 = frame.at<unsigned char>(comparedPoint);
+	return abs(pixelTarget - pixel1) >= threshold;
 }
 
 //										row,  col
